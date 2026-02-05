@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Mini 3D Editor (Offline)</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">3D</div>
+        <div>
+          <div class="title">Mini 3D Editor</div>
+          <div class="subtitle">OFFLINE (без CDN)</div>
+        </div>
+      </div>
+
+      <section class="panel">
+        <h3>Фигуры</h3>
+        <div class="grid">
+          <button class="btn" data-add="box">Куб</button>
+          <button class="btn" data-add="sphere">Сфера</button>
+          <button class="btn" data-add="cyl">Цилиндр</button>
+          <button class="btn" data-add="cone">Конус</button>
+          <button class="btn" data-add="torus">Тор</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Инструменты</h3>
+        <div class="grid">
+          <button class="btn" id="toolSelect">Выбор</button>
+          <button class="btn" id="toolMove">Перемещ.</button>
+          <button class="btn" id="toolRotate">Поворот</button>
+          <button class="btn" id="toolScale">Масштаб</button>
+        </div>
+        <div class="hint">
+          Трансформация мышью: <br/>
+          • Move — перетаскивание по плоскости (сетка) <br/>
+          • Rotate — тяни мышью влево/вправо <br/>
+          • Scale — тяни мышью вверх/вниз
+        </div>
+
+        <label class="row">
+          <span>Привязка к сетке</span>
+          <input id="snapToggle" type="checkbox" checked />
+        </label>
+        <label class="row">
+          <span>Шаг (мм)</span>
+          <input id="snapStep" type="number" min="0.1" step="0.1" value="1"/>
+        </label>
+      </section>
+
+      <section class="panel">
+        <h3>Свойства выбранного</h3>
+
+        <div class="hint" id="noSelection">Ничего не выбрано. Кликни по объекту.</div>
+
+        <div id="props" class="props hidden">
+          <label class="row">
+            <span>Имя</span>
+            <input id="objName" type="text"/>
+          </label>
+
+          <div class="row triple">
+            <div>
+              <label>W (мм)</label>
+              <input id="sizeX" type="number" step="0.1"/>
+            </div>
+            <div>
+              <label>H (мм)</label>
+              <input id="sizeY" type="number" step="0.1"/>
+            </div>
+            <div>
+              <label>D (мм)</label>
+              <input id="sizeZ" type="number" step="0.1"/>
+            </div>
+          </div>
+
+          <label class="row">
+            <span>Цвет</span>
+            <input id="color" type="color" value="#ff5533"/>
+          </label>
+
+          <div class="grid">
+            <button class="btn danger" id="deleteBtn">Удалить</button>
+            <button class="btn" id="duplicateBtn">Дублировать</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Файл</h3>
+        <div class="grid">
+          <button class="btn" id="saveJsonBtn">Сохранить JSON</button>
+          <button class="btn" id="loadJsonBtn">Загрузить JSON</button>
+          <input id="jsonFile" type="file" accept=".json" hidden/>
+        </div>
+        <div class="grid">
+          <button class="btn primary" id="exportStlBtn">Экспорт STL</button>
+          <button class="btn" id="clearBtn">Очистить сцену</button>
+        </div>
+        <div class="hint">Полностью оффлайн. Никаких внешних библиотек.</div>
+      </section>
+
+      <section class="panel">
+        <h3>Подсказки</h3>
+        <ul class="tips">
+          <li>ЛКМ — выбрать объект</li>
+          <li>Колёсико — зум</li>
+          <li>ПКМ или Shift+ЛКМ — вращение камеры</li>
+          <li>Move/Rotate/Scale — трансформация мышью</li>
+        </ul>
+      </section>
+    </aside>
+
+    <main class="viewport">
+      <canvas id="gl"></canvas>
+      <div class="status" id="status">Готово</div>
+      <div class="error hidden" id="errorBox">
+        <div class="errorTitle">Ошибка</div>
+        <pre id="errorText"></pre>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
